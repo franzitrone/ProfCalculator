@@ -2,7 +2,6 @@ package de.uulm.sp.swt.profcalculator;
 
 import de.uulm.sp.swt.profcalculator.expressions.Addition;
 import de.uulm.sp.swt.profcalculator.expressions.CounterValue;
-import de.uulm.sp.swt.profcalculator.expressions.CounterValue;
 import de.uulm.sp.swt.profcalculator.expressions.Expression;
 import de.uulm.sp.swt.profcalculator.expressions.Multiplication;
 import de.uulm.sp.swt.profcalculator.expressions.NecessaryBrackets;

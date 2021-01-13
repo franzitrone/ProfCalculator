@@ -15,7 +15,7 @@ public class CounterValue extends Value implements Runnable {
 
 	@Override
 	public void run() {
-		while (value < 10) {
+		while (value < 1) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {

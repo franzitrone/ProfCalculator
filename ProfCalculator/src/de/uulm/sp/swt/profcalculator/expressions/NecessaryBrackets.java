@@ -11,7 +11,7 @@ public class NecessaryBrackets extends Expression {
 	@Override
 	public String toString(Expression parent) {
 		String childString = expression.toString(parent);
-		if (parent instanceof Multiplication && expression instanceof Addition) {
+		if (expression instanceof Multiplication && parent instanceof Addition) {
 			childString = "(" + childString + ")";
 		}
 		return childString;

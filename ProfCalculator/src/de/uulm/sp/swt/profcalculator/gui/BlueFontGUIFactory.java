@@ -3,7 +3,6 @@ package de.uulm.sp.swt.profcalculator.gui;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
 public class BlueFontGUIFactory implements GUIFactory {
 	
