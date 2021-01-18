@@ -1,4 +1,10 @@
 package de.uulm.sp.swt.moduloexample;
+
+/**
+ * Example to illustrate unit testing.
+ * 
+ * @author Thomas Thuem
+ */
 public class ModuloExample {
 
 	/**

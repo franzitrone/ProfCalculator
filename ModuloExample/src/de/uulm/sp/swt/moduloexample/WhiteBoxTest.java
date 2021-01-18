@@ -1,8 +1,14 @@
 package de.uulm.sp.swt.moduloexample;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Example test cases in white-box testing.
+ * 
+ * @author Thomas Thuem
+ */
 class WhiteBoxTest {
 
 	@Test
