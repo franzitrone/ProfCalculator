@@ -20,6 +20,7 @@ class WhiteBoxTest {
 
 	@Test
 	void testBranchCoverage() {
+		testStatementCoverage();
 		// path: 1, 3, 4, 6
 		// logical test case: b >= 0 and m >= 0 && m < b
 		assertEquals(0, ModuloExample.modulo(0, 4));
@@ -27,6 +28,7 @@ class WhiteBoxTest {
 
 	@Test
 	void testTermCoverage() {
+		testBranchCoverage();
 		// path: 1, 3, 4, 5, 4, 6
 		// logical test case: b >= 0 and m < 0
 		//   as m >= b already covered in first test case
