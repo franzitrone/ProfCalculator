@@ -1,4 +1,6 @@
 package de.uulm.sp.swt.moduloexample;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.Test;
 
 class JavaModuloTest {
@@ -14,4 +16,15 @@ class JavaModuloTest {
 		}
 	}
 	
+	@Test
+	void testJavasDivisionByZero() {
+		try {
+			System.out.println(5 % 0);
+		}
+		catch (ArithmeticException e) {
+			return;
+		}
+		fail();
+	}
+
 }
