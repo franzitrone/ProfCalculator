@@ -2,7 +2,6 @@ package de.uulm.sp.swt.moduloexample;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class BlackBoxTest {
@@ -19,7 +18,6 @@ class BlackBoxTest {
 		assertEquals(1,ModuloExample.modulo(1,2));
 	}
 
-	@Disabled("Disabled because of endless loop")
 	@Test
 	void moduloEquivalenceTest3() {
 		try {
