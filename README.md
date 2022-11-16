@@ -6,6 +6,6 @@ Lecture at University of Ulm: https://www.uni-ulm.de/in/sp/teaching/software-eng
 
 Lecture on Youtube: https://www.youtube.com/watch?v=3fCRcCgxH3E&list=PL4hJhdKDPIxgtzV6qUrAqOQtVQ40yv_jb
 
-## Hints for Setting Up JavaFX in Eclipse
+## Java Version
 
-I found the following tutorial helpful in setting up Eclipse for JavaFX: https://www.youtube.com/watch?v=oVn6_2KuYbM
+Build for Java 11
