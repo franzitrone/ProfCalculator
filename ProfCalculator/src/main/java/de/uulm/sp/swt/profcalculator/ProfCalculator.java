@@ -16,14 +16,13 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 
 	private final static Value DEFAULT_VALUE = new Value(0);
 
-	private Expression expression = new Addition(DEFAULT_VALUE, DEFAULT_VALUE);
+	private Add addition = new Add(DEFAULT_VALUE, DEFAULT_VALUE);
 
 	private Label errorLabel = new Label();
 
 	private TextField inputField = new TextField();
 
-	private Button additionButton = new Button("+");
-	private Button multiplicationButton = new Button("*");
+	private Button addButton = new Button("+");
 
 	private Label resultLabel = new Label();
 
@@ -32,14 +31,13 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 		stage.setTitle("Professorial Calculator");
 		errorLabel.setTextFill(Color.web("#AA0000"));
 
-		VBox layout = new VBox(10, errorLabel, inputField, additionButton, multiplicationButton, resultLabel);
+		VBox layout = new VBox(10, errorLabel, inputField, addButton, resultLabel);
 		layout.setPadding(new Insets(20, 80, 20, 80));
 		Scene scene = new Scene(layout);
 
 		stage.setScene(scene);
 		stage.show();
-		additionButton.setOnAction(this);
-		multiplicationButton.setOnAction(this);
+		addButton.setOnAction(this);
 		updateGUI();
 	}
 
@@ -47,13 +45,8 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 	public void handle(ActionEvent event) {
 		try {
 			int newValue = Integer.parseInt(inputField.getText());
-			int oldResult = expression.evaluate();
-			if (event.getSource() == additionButton) {
-				expression = new Addition(new Value(oldResult), new Value(newValue));
-			}
-			else if (event.getSource() == multiplicationButton) {
-				expression = new Multiplication(new Value(oldResult), new Value(newValue));
-			}
+			int oldResult = addition.evaluate();
+			addition = new Add(new Value(oldResult), new Value(newValue));
 			updateGUI();
 			inputField.requestFocus();
 		} catch (NumberFormatException e) {
@@ -62,7 +55,7 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 	}
 
 	private void updateGUI() {
-		resultLabel.setText(expression.computeEquation());
+		resultLabel.setText(addition.computeEquation());
 		inputField.setText("");
 		errorLabel.setText("");
 	}
