@@ -1,10 +1,14 @@
 package de.uulm.sp.swt.profcalculator;
 
 import de.uulm.sp.swt.profcalculator.expressions.Addition;
+import de.uulm.sp.swt.profcalculator.expressions.CounterValue;
+import de.uulm.sp.swt.profcalculator.expressions.CounterValue;
 import de.uulm.sp.swt.profcalculator.expressions.Expression;
 import de.uulm.sp.swt.profcalculator.expressions.Multiplication;
 import de.uulm.sp.swt.profcalculator.expressions.NecessaryBrackets;
 import de.uulm.sp.swt.profcalculator.expressions.Value;
+import de.uulm.sp.swt.profcalculator.gui.BlueFontGUIFactory;
+import de.uulm.sp.swt.profcalculator.gui.GUIFactory;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,18 +23,18 @@ import javafx.stage.Stage;
 
 public class ProfCalculator	extends Application implements EventHandler<ActionEvent> {
 
-	private final static Value DEFAULT_VALUE = new Value(0);
+	private Expression expression = new CounterValue(this);
+	
+	private GUIFactory guiFactory = new BlueFontGUIFactory();
 
-	private Expression expression = DEFAULT_VALUE;
-
-	private Label errorLabel = new Label();
+	private Label errorLabel = guiFactory.createLabel();
 
 	private TextField inputField = new TextField();
 
-	private Button additionButton = new Button("+");
-	private Button multiplicationButton = new Button("*");
+	private Button additionButton = guiFactory.createButton("+");
+	private Button multiplicationButton = guiFactory.createButton("*");
 
-	private Label resultLabel = new Label();
+	private Label resultLabel = guiFactory.createLabel();
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -54,9 +58,11 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 			int newValue = Integer.parseInt(inputField.getText());
 			if (event.getSource() == additionButton) {
 				expression = new Addition(expression, new Value(newValue));
+				Logger.getLogger().log("+ " + newValue);
 			}
 			else if (event.getSource() == multiplicationButton) {
 				expression = new Multiplication(expression, new Value(newValue));
+				Logger.getLogger().log("* " + newValue);
 			}
 			expression = new NecessaryBrackets(expression);
 			updateGUI();
@@ -66,7 +72,7 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 		}
 	}
 
-	private void updateGUI() {
+	public void updateGUI() {
 		resultLabel.setText(expression.computeEquation());
 		inputField.setText("");
 		errorLabel.setText("");
