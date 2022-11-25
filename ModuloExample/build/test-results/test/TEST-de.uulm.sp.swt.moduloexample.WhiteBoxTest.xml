@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="de.uulm.sp.swt.moduloexample.WhiteBoxTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-11-25T16:04:57" hostname="LAPTOP-JBM1H72C" time="0.073">
+  <properties/>
+  <testcase name="testStatementCoverage()" classname="de.uulm.sp.swt.moduloexample.WhiteBoxTest" time="0.073"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
