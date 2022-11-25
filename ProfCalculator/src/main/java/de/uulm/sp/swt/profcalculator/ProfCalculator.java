@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 
 public class ProfCalculator	extends Application implements EventHandler<ActionEvent> {
 
-	private Expression expression = new CounterValue(this);
+	private Expression expression = new CounterValue(this, false);
 	
 	private GUIFactory guiFactory = new BlueFontGUIFactory();
 
@@ -76,6 +76,10 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 		resultLabel.setText(expression.computeEquation());
 		inputField.setText("");
 		errorLabel.setText("");
+	}
+
+	public void updateResultLabel() {
+		resultLabel.setText(expression.computeEquation());
 	}
 
 	public static void main(String[] args) {

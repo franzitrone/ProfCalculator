@@ -13,6 +13,14 @@ public class CounterValue extends Value implements Runnable {
 		new Thread(this).start();
 	}
 
+	public CounterValue(ProfCalculator calc, boolean b) {
+		super(0);
+		this.calc = calc;
+		if (b) {
+			new Thread(this).start();
+		}
+	}
+
 	@Override
 	public void run() {
 		while (value < 10) {
@@ -24,7 +32,7 @@ public class CounterValue extends Value implements Runnable {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					calc.updateGUI();
+					calc.updateResultLabel();
 				}
 			});
 		}
