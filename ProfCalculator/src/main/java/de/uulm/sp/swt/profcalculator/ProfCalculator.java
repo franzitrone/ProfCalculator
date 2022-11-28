@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 
 public class ProfCalculator	extends Application implements EventHandler<ActionEvent> {
 
-	private Expression expression = new CounterValue(this, false);
+	private Expression expression = new NecessaryBrackets(new CounterValue(this, false));
 	
 	private GUIFactory guiFactory = new BlueFontGUIFactory();
 
@@ -57,11 +57,11 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 		try {
 			int newValue = Integer.parseInt(inputField.getText());
 			if (event.getSource() == additionButton) {
-				expression = new Addition(expression, new Value(newValue));
+				expression = new Addition(expression, new NecessaryBrackets(new Value(newValue)));
 				Logger.getLogger().log("+ " + newValue);
 			}
 			else if (event.getSource() == multiplicationButton) {
-				expression = new Multiplication(expression, new Value(newValue));
+				expression = new Multiplication(expression, new NecessaryBrackets(new Value(newValue)));
 				Logger.getLogger().log("* " + newValue);
 			}
 			expression = new NecessaryBrackets(expression);
