@@ -4,10 +4,10 @@ public abstract class Expression {
 
 	public abstract int evaluate();
 
-	public abstract String toString(Expression parent);
+	public abstract String toString(Expression parent, ChildType type);
 
 	public String toString() {
-		return toString(null);
+		return toString(null, ChildType.CHILD);
 	}
 
 	public String computeEquation() {
