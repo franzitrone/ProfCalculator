@@ -2,6 +2,7 @@ package de.uulm.sp.swt.moduloexample;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 class JavaModuloTest {
@@ -26,6 +27,12 @@ class JavaModuloTest {
             return;
         }
         fail();
+    }
+
+    @Test
+    void integerOverflow() {
+        assertEquals(Integer.MIN_VALUE+1,-Integer.MAX_VALUE);
+        assertEquals(Integer.MIN_VALUE,-Integer.MIN_VALUE);
     }
 
 }
