@@ -1,12 +1,7 @@
 package de.uulm.sp.swt.profcalculator;
 
-import de.uulm.sp.swt.profcalculator.expressions.Addition;
+import de.uulm.sp.swt.profcalculator.expressions.*;
 import de.uulm.sp.swt.profcalculator.expressions.CounterValue;
-import de.uulm.sp.swt.profcalculator.expressions.CounterValue;
-import de.uulm.sp.swt.profcalculator.expressions.Expression;
-import de.uulm.sp.swt.profcalculator.expressions.Multiplication;
-import de.uulm.sp.swt.profcalculator.expressions.NecessaryBrackets;
-import de.uulm.sp.swt.profcalculator.expressions.Value;
 import de.uulm.sp.swt.profcalculator.gui.BlueFontGUIFactory;
 import de.uulm.sp.swt.profcalculator.gui.GUIFactory;
 import javafx.application.Application;
@@ -33,6 +28,7 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 
 	private Button additionButton = guiFactory.createButton("+");
 	private Button multiplicationButton = guiFactory.createButton("*");
+	private Button divisionButton = guiFactory.createButton("/");
 
 	private Label resultLabel = guiFactory.createLabel();
 
@@ -41,7 +37,7 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 		stage.setTitle("Professorial Calculator");
 		errorLabel.setTextFill(Color.web("#AA0000"));
 
-		VBox layout = new VBox(10, errorLabel, inputField, additionButton, multiplicationButton, resultLabel);
+		VBox layout = new VBox(10, errorLabel, inputField, additionButton, multiplicationButton, divisionButton, resultLabel);
 		layout.setPadding(new Insets(20, 80, 20, 80));
 		Scene scene = new Scene(layout);
 
@@ -49,6 +45,7 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 		stage.show();
 		additionButton.setOnAction(this);
 		multiplicationButton.setOnAction(this);
+		divisionButton.setOnAction(this);
 		updateGUI();
 	}
 
@@ -63,6 +60,13 @@ public class ProfCalculator	extends Application implements EventHandler<ActionEv
 			else if (event.getSource() == multiplicationButton) {
 				expression = new Multiplication(expression, new NecessaryBrackets(new Value(newValue)));
 				Logger.getLogger().log("* " + newValue);
+			} else if (event.getSource() == divisionButton) {
+				if (newValue == 0) {
+					errorLabel.setText("Division by 0 is not permitted");
+					return;
+				}
+				expression = new Division(expression, new NecessaryBrackets(new Value(newValue)));
+				Logger.getLogger().log("/ " + newValue);
 			}
 			expression = new NecessaryBrackets(expression);
 			updateGUI();

@@ -1,5 +1,6 @@
 package de.uulm.sp.swt.profcalculator.expressions;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +13,8 @@ public class NecessaryBracketsBlackBoxTest {
     Expression add = new NecessaryBrackets(new Addition(value, value));
 
     Expression mult = new NecessaryBrackets(new Multiplication(value, value));
+
+    Expression div = new NecessaryBrackets(new Division(value, value));
 
     @Test
     void testNoBrackets() {
@@ -51,5 +54,34 @@ public class NecessaryBracketsBlackBoxTest {
     @Test
     void testNeitherNegativeValue() {
         assertEquals("1 + 1", new Addition(value, value).toString());
+    }
+
+    //@Disabled("Bla")
+    @Test
+    void testDivisionParent() {
+        assertEquals("1 / 1", new Division(value, value).toString());
+        assertEquals("1 * 1 / 1", new Division(mult, value).toString());
+        assertEquals("1 / (1 * 1)", new Division(value, mult).toString());
+        assertEquals("1 * 1 / (1 * 1)", new Division(mult, mult).toString());
+
+        assertEquals("(1 + 1) / 1", new Division(add, value).toString());
+        assertEquals("1 / (1 + 1)", new Division(value, add).toString());
+        assertEquals("(1 + 1) / (1 + 1)", new Division(add, add).toString());
+
+        assertEquals("1 / 1 / 1", new Division(div, value).toString());
+        assertEquals("1 / (1 / 1)", new Division(value, div).toString());
+        assertEquals("1 / 1 / (1 / 1)", new Division(div, div).toString());
+    }
+
+    //@Disabled("Bla")
+    @Test
+    void testDivisionChild() {
+        assertEquals("1 / 1 + 1", new Addition(div, value).toString());
+        assertEquals("1 + 1 / 1", new Addition(value, div).toString());
+        assertEquals("1 / 1 + 1 / 1", new Addition(div, div).toString());
+
+        assertEquals("1 / 1 * 1", new Multiplication(div, value).toString());
+        assertEquals("1 * (1 / 1)", new Multiplication(value, div).toString());
+        assertEquals("1 / 1 * (1 / 1)", new Multiplication(div, div).toString());
     }
 }
