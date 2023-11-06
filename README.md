@@ -1,11 +1,7 @@
-# 2020WS-SWT-Calculator
+# 2023WS-SWT-Calculator
 
 An example project to illustrate coding guidelines, version control, and design patterns in a software engineering lecture in Ulm.
 
-Lecture at University of Ulm: https://www.uni-ulm.de/in/sp/teaching/software-engineering-i/
+Lecture at University of Ulm: https://www.uni-ulm.de/in/sp/teaching/software-engineering-i-ii/
 
-Lecture on Youtube: https://www.youtube.com/watch?v=3fCRcCgxH3E&list=PL4hJhdKDPIxgtzV6qUrAqOQtVQ40yv_jb
-
-## Hints for Setting Up JavaFX in Eclipse
-
-I found the following tutorial helpful in setting up Eclipse for JavaFX: https://www.youtube.com/watch?v=oVn6_2KuYbM
+Lecture on Youtube: https://www.youtube.com/watch?v=5LbziKC_EMQ&list=PL4hJhdKDPIxgdT3y1Y0RlDXr5UkDQZNdd
