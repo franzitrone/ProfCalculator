@@ -12,56 +12,65 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class ProfCalculator	extends Application implements EventHandler<ActionEvent> {
+public class ProfCalculator
 
-	private final static Value DEFAULT_VALUE = new Value(0);
+		extends Application
 
-	private Add addition = new Add(DEFAULT_VALUE, DEFAULT_VALUE);
+		implements EventHandler<ActionEvent>
 
-	private Label errorLabel = new Label();
+{
 
-	private TextField inputField = new TextField();
+	private final static VALUE defaultvalue = new VALUE(0);
 
-	private Button addButton = new Button("+");
+	private add addition = new add(defaultvalue, defaultvalue);
 
-	private Label resultLabel = new Label();
+	private Label ERROR = new Label("");
+
+	private TextField i = new TextField("");
+
+	private Button a = new Button("+");
+
+	private Label reSult = new Label(addition.computeAnEquationRepresentingTheExpressionAndItsValue());
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		stage.setTitle("Professorial Calculator");
-		errorLabel.setTextFill(Color.web("#AA0000"));
+		stage.setTitle("Professioral Calculator");
+		ERROR.setTextFill(Color.web("#AA0000"));
 
-		VBox layout = new VBox(10, errorLabel, inputField, addButton, resultLabel);
+//		Tried a different layout first, but this looked ugly.
+//		BorderPane borderPane = new BorderPane();
+//		borderPane.setTop(inputField);
+//		borderPane.setCenter(addButton);
+//		borderPane.setBottom(resultLabel);
+//		Scene scene = new Scene(borderPane);
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().add(ERROR);
+
+		layout.getChildren().add(i);
+
+		layout.getChildren().add(a);
+
+		layout.getChildren().add(reSult);
+
 		layout.setPadding(new Insets(20, 80, 20, 80));
 		Scene scene = new Scene(layout);
 
 		stage.setScene(scene);
 		stage.show();
-		addButton.setOnAction(this);
-		updateGUI();
+		a.setOnAction(this);
 	}
 
 	@Override
 	public void handle(ActionEvent event) {
 		try {
-			int newValue = Integer.parseInt(inputField.getText());
-			int oldResult = addition.evaluate();
-			addition = new Add(new Value(oldResult), new Value(newValue));
-			updateGUI();
-			inputField.requestFocus();
-		} catch (NumberFormatException e) {
-			errorLabel.setText("\"" + inputField.getText() + "\" is not a valid integer");
-		}
+			int newValue = Integer.parseInt(i.getText()); int oldResult = addition.evaluatetheexpressiontoanintegervalue();
+			addition = new add(new VALUE(oldResult), new VALUE(newValue)); reSult.setText(addition.computeAnEquationRepresentingTheExpressionAndItsValue());
+			i.setText(""); ERROR.setText(""); i.requestFocus();
+		}                    catch (NumberFormatException e) { ERROR.setText("\"" + i.getText() + "\" is not a valid integer"); }
 	}
 
-	private void updateGUI() {
-		resultLabel.setText(addition.computeEquation());
-		inputField.setText("");
-		errorLabel.setText("");
-	}
-
-	public static void main(String[] args) {
-		launch(args);
-	}
+	public static void main(String[] args) { launch(args); }
 
 }
