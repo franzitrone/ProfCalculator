@@ -1,17 +1,17 @@
 package de.uulm.sp.swt.profcalculator;
 
 public class VALUE {
-    Integer value;
 
-    public VALUE(int value)
-    {
-        this.value = value;
+        Integer value;
+
+        public VALUE(int value)
+        {
+    this.value = value;
     }
 
-    public String toString()
+        public String toString()
     {
-        return value.toString();
-    }
+            return value.toString();
+        }
 
-    public int getValue() { return value; }
-}
+    public int getValue() { return value.intValue(); }}
