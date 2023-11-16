@@ -1,5 +1,7 @@
 package de.uulm.sp.swt.profcalculator;
 
+import de.uulm.sp.swt.profcalculator.expressions.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,20 +9,29 @@ import java.awt.event.ActionListener;
 
 public class ProfCalculator implements Runnable, ActionListener {
 
-    private final static VALUE defaultvalue = new VALUE(0);
-    private add addition = new add(defaultvalue, defaultvalue);
-    private JLabel ERROR = new JLabel(" ");
-    private JTextField i = new JTextField("");
-    private JButton a = new JButton("+");
-    private JLabel reSult = new JLabel(addition.computeAnEquationRepresentingTheExpressionAndItsValue());
+    private final static Value DEFAULT_VALUE = new Value(0);
+    private Expression expression = DEFAULT_VALUE;
+    private JLabel errorLabel = new JLabel();
+    private JTextField inputField = new JTextField();
+    private JButton addButton = new JButton("+");
+    private JButton multButton = new JButton("*");
+    private JLabel resultLabel = new JLabel();
 
     @Override
     public void actionPerformed(ActionEvent event) {
         try {
-            int newValue = Integer.parseInt(i.getText()); int oldResult = addition.evaluatetheexpressiontoanintegervalue();
-            addition = new add(new VALUE(oldResult), new VALUE(newValue)); reSult.setText(addition.computeAnEquationRepresentingTheExpressionAndItsValue());
-            i.setText(""); ERROR.setText(" "); i.requestFocusInWindow();
-        } catch (NumberFormatException e) { ERROR.setText("\"" + i.getText() + "\" is not a valid integer");}
+            int newValue = Integer.parseInt(inputField.getText());
+            if (event.getSource() == addButton) {
+                expression = new Add(expression, new Value(newValue));
+            } else {
+                expression = new Mult(expression, new Value(newValue));
+            }
+            expression = new NecessaryBrackets(expression);
+            updateGUI();
+            inputField.requestFocusInWindow();
+        } catch (NumberFormatException e) {
+            errorLabel.setText("\"" + inputField.getText() + "\" is not a valid integer");
+        }
     }
 
     @Override
@@ -29,27 +40,31 @@ public class ProfCalculator implements Runnable, ActionListener {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
 
-        //Didn't really work:
-        //frame.setLayout(new BorderLayout());
-        //Box layout = Box.createVerticalBox();
-        //frame.getContentPane().add(layout);
+        errorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        inputField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        addButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        multButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        resultLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        errorLabel.setForeground(Color.RED);
+        inputField.setPreferredSize(new Dimension(300, 20));
+        addButton.addActionListener(this);
+        multButton.addActionListener(this);
 
-        ERROR.setAlignmentX(Component.LEFT_ALIGNMENT);
-        i.setAlignmentX(Component.LEFT_ALIGNMENT);
-        a.setAlignmentX(Component.LEFT_ALIGNMENT);
-        reSult.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        ERROR.setForeground(Color.RED);
-        i.setPreferredSize(new Dimension(300, 20));
-        a.addActionListener(this);
-
-        frame.add(ERROR);
-        frame.add(i);
-        frame.add(a);
-        frame.add(reSult);
+        frame.add(errorLabel);
+        frame.add(inputField);
+        frame.add(addButton);
+        frame.add(multButton);
+        frame.add(resultLabel);
+        updateGUI();
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private void updateGUI() {
+        resultLabel.setText(expression.computeEquation());
+        inputField.setText("");
+        errorLabel.setText(" ");
     }
 
     public static void main(String[] args) {
