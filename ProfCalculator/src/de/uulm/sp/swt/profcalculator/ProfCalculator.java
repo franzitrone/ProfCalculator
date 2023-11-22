@@ -3,7 +3,6 @@ package de.uulm.sp.swt.profcalculator;
 import de.uulm.sp.swt.profcalculator.expressions.*;
 import de.uulm.sp.swt.profcalculator.gui.BlueFontGUIFactory;
 import de.uulm.sp.swt.profcalculator.gui.GUIFactory;
-import de.uulm.sp.swt.profcalculator.gui.LargeFontGUIFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,24 +11,23 @@ import java.awt.event.ActionListener;
 
 public class ProfCalculator implements Runnable, ActionListener {
 
-    private final static Value DEFAULT_VALUE = new Value(0);
-    private Expression expression = new CounterValue(this);
+    private Expression expression = new CounterValue(this, false);
     private GUIFactory guiFactory = new BlueFontGUIFactory();
     private JLabel errorLabel = guiFactory.createLabel();
     private JTextField inputField = new JTextField();
-    private JButton addButton = guiFactory.createButton("+");
-    private JButton multButton = guiFactory.createButton("*");
+    private JButton additionButton = guiFactory.createButton("+");
+    private JButton multiplicationButton = guiFactory.createButton("*");
     private JLabel resultLabel = guiFactory.createLabel();
 
     @Override
     public void actionPerformed(ActionEvent event) {
         try {
             int newValue = Integer.parseInt(inputField.getText());
-            if (event.getSource() == addButton) {
-                expression = new Add(expression, new Value(newValue));
+            if (event.getSource() == additionButton) {
+                expression = new Addition(expression, new Value(newValue));
                 Logger.getLogger().log("+ " + newValue);
-            } else {
-                expression = new Mult(expression, new Value(newValue));
+            } else if (event.getSource() == multiplicationButton) {
+                expression = new Multiplication(expression, new Value(newValue));
                 Logger.getLogger().log("* " + newValue);
             }
             expression = new NecessaryBrackets(expression);
@@ -48,29 +46,33 @@ public class ProfCalculator implements Runnable, ActionListener {
 
         errorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         inputField.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        multButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        additionButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        multiplicationButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         resultLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         errorLabel.setForeground(Color.RED);
         inputField.setPreferredSize(new Dimension(300, 20));
-        addButton.addActionListener(this);
-        multButton.addActionListener(this);
+        additionButton.addActionListener(this);
+        multiplicationButton.addActionListener(this);
 
         frame.add(errorLabel);
         frame.add(inputField);
-        frame.add(addButton);
-        frame.add(multButton);
+        frame.add(additionButton);
+        frame.add(multiplicationButton);
         frame.add(resultLabel);
         updateGUI();
         frame.pack();
         frame.setVisible(true);
     }
 
-    public void updateGUI() {
+    private void updateGUI() {
         resultLabel.setText(expression.computeEquation());
         inputField.setText("");
         errorLabel.setText(" ");
+    }
+
+    public void updateResultLabel() {
+        resultLabel.setText(expression.computeEquation());
     }
 
     public static void main(String[] args) {

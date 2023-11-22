@@ -3,7 +3,7 @@ package de.uulm.sp.swt.profcalculator.gui;
 import javax.swing.*;
 import java.awt.*;
 
-// ConcreteFactory of Abstract Factory Pattern
+
 public class BlueFontGUIFactory implements GUIFactory {
 
     final static Color BLUE = new Color(0, 0, 255);

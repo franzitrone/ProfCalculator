@@ -7,10 +7,19 @@ import javax.swing.*;
 public class CounterValue extends Value implements Runnable {
 
     private ProfCalculator calc;
+
     public CounterValue(ProfCalculator calc) {
         super(0);
         this.calc = calc;
         new Thread(this).start();
+    }
+
+    public CounterValue(ProfCalculator calc, boolean b) {
+        super(0);
+        this.calc = calc;
+        if (b) {
+            new Thread(this).start();
+        }
     }
 
     @Override
@@ -21,10 +30,13 @@ public class CounterValue extends Value implements Runnable {
             } catch (InterruptedException e) {
             }
             value++;
-            SwingUtilities.invokeLater(() -> {
-                calc.updateGUI();
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    calc.updateResultLabel();
+                }
             });
-
         }
     }
+
 }

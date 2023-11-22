@@ -1,6 +1,6 @@
 package de.uulm.sp.swt.profcalculator;
 
-// Singleton
+
 public class Logger {
 
     public static final boolean LOGGING = true;

@@ -3,7 +3,7 @@ package de.uulm.sp.swt.profcalculator.gui;
 import javax.swing.*;
 import java.awt.*;
 
-// ConcreteFactory of Abstract Factory Pattern
+
 public class LargeFontGUIFactory implements GUIFactory {
     final static Font FONT = new Font("Arial", Font.PLAIN, 24);
 
