@@ -1,6 +1,9 @@
 package de.uulm.sp.swt.profcalculator;
 
 import de.uulm.sp.swt.profcalculator.expressions.*;
+import de.uulm.sp.swt.profcalculator.gui.BlueFontGUIFactory;
+import de.uulm.sp.swt.profcalculator.gui.GUIFactory;
+import de.uulm.sp.swt.profcalculator.gui.LargeFontGUIFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +13,13 @@ import java.awt.event.ActionListener;
 public class ProfCalculator implements Runnable, ActionListener {
 
     private final static Value DEFAULT_VALUE = new Value(0);
-    private Expression expression = DEFAULT_VALUE;
-    private JLabel errorLabel = new JLabel();
+    private Expression expression = new CounterValue(this);
+    private GUIFactory guiFactory = new BlueFontGUIFactory();
+    private JLabel errorLabel = guiFactory.createLabel();
     private JTextField inputField = new JTextField();
-    private JButton addButton = new JButton("+");
-    private JButton multButton = new JButton("*");
-    private JLabel resultLabel = new JLabel();
+    private JButton addButton = guiFactory.createButton("+");
+    private JButton multButton = guiFactory.createButton("*");
+    private JLabel resultLabel = guiFactory.createLabel();
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -23,8 +27,10 @@ public class ProfCalculator implements Runnable, ActionListener {
             int newValue = Integer.parseInt(inputField.getText());
             if (event.getSource() == addButton) {
                 expression = new Add(expression, new Value(newValue));
+                Logger.getLogger().log("+ " + newValue);
             } else {
                 expression = new Mult(expression, new Value(newValue));
+                Logger.getLogger().log("* " + newValue);
             }
             expression = new NecessaryBrackets(expression);
             updateGUI();
@@ -61,7 +67,7 @@ public class ProfCalculator implements Runnable, ActionListener {
         frame.setVisible(true);
     }
 
-    private void updateGUI() {
+    public void updateGUI() {
         resultLabel.setText(expression.computeEquation());
         inputField.setText("");
         errorLabel.setText(" ");
