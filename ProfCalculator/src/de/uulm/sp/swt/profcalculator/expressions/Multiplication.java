@@ -14,7 +14,7 @@ public class Multiplication extends Expression {
     }
 
     public String toString(Expression parent) {
-        return l.toString(this) + " * " + r.toString(parent);
+        return l.toString(this) + " * " + r.toString(this);
     }
 
 }
