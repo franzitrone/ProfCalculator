@@ -13,8 +13,8 @@ public class Multiplication extends Expression {
         return l.evaluate() * r.evaluate();
     }
 
-    public String toString(Expression parent) {
-        return l.toString(this) + " * " + r.toString(this);
+    public String toString(Expression parent, boolean isRightChild) {
+        return l.toString(this, false) + " * " + r.toString(this, true);
     }
 
 }

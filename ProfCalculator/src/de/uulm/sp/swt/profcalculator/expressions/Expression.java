@@ -23,9 +23,14 @@ public abstract class Expression {
      * particular case.
      *
      * @param parent the expression containing this or null if root expression
+     * @param isRightChild true if this is the right child of parent, false otherwise
      * @return a string representation of the expression
      */
-    public abstract String toString(Expression parent);
+    public abstract String toString(Expression parent, boolean isRightChild);
+
+    public String toString(Expression parent) {
+        return toString(parent, false);
+    }
 
     public String toString() {
         return toString(null);

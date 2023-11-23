@@ -8,7 +8,7 @@ public class Value extends Expression {
         this.value = value;
     }
 
-    public String toString(Expression parent) {
+    public String toString(Expression parent, boolean isRightChild) {
         return value.toString();
     }
 

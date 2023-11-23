@@ -14,11 +14,24 @@ public class NecessaryBrackets extends Expression {
     }
 
     @Override
-    public String toString(Expression parent) {
+    public String toString(Expression parent, boolean isRightChild) {
         String childString = expression.toString(parent);
-        if (parent instanceof Multiplication && expression instanceof Addition) {
+        boolean brackets = false;
+
+        if (hasHighPrecedence(parent) && expression instanceof Addition) {
+            // z.B. (1 + 2) * 3
+            brackets = true;
+        } else if (parent instanceof Division && !(expression instanceof Value) && isRightChild) {
+            // z.B. 8 / 4 / 2 = 1, aber 8 / (4 / 2) = 4
+            brackets = true;
+        }
+        if (brackets) {
             childString = "(" + childString + ")";
         }
         return childString;
+    }
+
+    private boolean hasHighPrecedence(Expression expression) {
+        return expression instanceof Multiplication || expression instanceof Division;
     }
 }

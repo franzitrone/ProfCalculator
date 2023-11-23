@@ -17,6 +17,8 @@ public class ProfCalculator implements Runnable, ActionListener {
     private JTextField inputField = new JTextField();
     private JButton additionButton = guiFactory.createButton("+");
     private JButton multiplicationButton = guiFactory.createButton("*");
+
+    private  JButton divisionButton = guiFactory.createButton("÷");
     private JLabel resultLabel = guiFactory.createLabel();
 
     @Override
@@ -29,6 +31,13 @@ public class ProfCalculator implements Runnable, ActionListener {
             } else if (event.getSource() == multiplicationButton) {
                 expression = new Multiplication(expression, new Value(newValue));
                 Logger.getLogger().log("* " + newValue);
+            } else if (event.getSource() == divisionButton) {
+                if (newValue == 0) {
+                    errorLabel.setText("Division by 0 is not permitted!");
+                    return;
+                }
+                expression = new Division(expression, new Value(newValue));
+                Logger.getLogger().log("/ " + newValue);
             }
             expression = new NecessaryBrackets(expression);
             updateGUI();
@@ -48,17 +57,20 @@ public class ProfCalculator implements Runnable, ActionListener {
         inputField.setAlignmentX(Component.LEFT_ALIGNMENT);
         additionButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         multiplicationButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        divisionButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         resultLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         errorLabel.setForeground(Color.RED);
         inputField.setPreferredSize(new Dimension(300, 20));
         additionButton.addActionListener(this);
         multiplicationButton.addActionListener(this);
+        divisionButton.addActionListener(this);
 
         frame.add(errorLabel);
         frame.add(inputField);
         frame.add(additionButton);
         frame.add(multiplicationButton);
+        frame.add(divisionButton);
         frame.add(resultLabel);
         updateGUI();
         frame.pack();
