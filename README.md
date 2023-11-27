@@ -42,7 +42,7 @@ https://github.com/SoftVarE-Group/ProfCalculator/tree/2023-11-16v1
 Run the White/Black Box Tests and fix the bugs they detect ([Moodle Overflow](https://moodle.uni-ulm.de/mod/moodleoverflow/discussion.php?d=5604))
 
 Starting point:  
-https://github.com/SoftVarE-Group/ProfCalculator/tree/2023-11-23v0
+https://github.com/SoftVarE-Group/ProfCalculator/tree/2023-11-23v0  
 `git checkout 2023-11-23v0`
 
 Solution:  
