@@ -34,4 +34,25 @@ public abstract class Expression {
     public String computeEquation() {
         return this + " = " + evaluate();
     }
+
+    public final Command asCommand(Expression previousState) {
+        return new Command(previousState, this);
+    }
+
+    public final static class Command {
+        private Expression previousState;
+        private Expression thisState;
+        private Command(Expression previousState, Expression thisState) {
+            this.previousState = previousState;
+            this.thisState = thisState;
+        }
+
+        public Expression apply() {
+            return thisState;
+        }
+
+        public Expression undo() {
+            return previousState;
+        }
+    }
 }

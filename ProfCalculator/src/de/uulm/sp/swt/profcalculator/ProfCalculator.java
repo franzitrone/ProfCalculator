@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.LinkedList;
 
 public class ProfCalculator implements Runnable, ActionListener {
 
@@ -20,17 +22,65 @@ public class ProfCalculator implements Runnable, ActionListener {
     private JButton undoButton = guiFactory.createButton("UNDO");
     private JButton redoButton = guiFactory.createButton("REDO");
     private JLabel resultLabel = guiFactory.createLabel();
+    private LinkedList<Expression.Command> commandHistory = new LinkedList<>();
+    private int commandHistoryPosition = -1;
+
+    private void undo() {
+        if (commandHistoryPosition < 0) {
+            return;
+        }
+
+        expression = commandHistory.get(commandHistoryPosition).undo();
+        commandHistoryPosition--;
+    }
+
+    private void redo() {
+        if (isLastCommand()) {
+            return;
+        }
+
+        commandHistoryPosition++;
+        expression = commandHistory.get(commandHistoryPosition).apply();
+    }
+
+    private Expression addCommand(Expression previousExpression, Expression newExpression) {
+        clearRedoCommands();
+
+        commandHistoryPosition++;
+        commandHistory.addLast(newExpression.asCommand(previousExpression));
+
+        return newExpression;
+    }
+
+    private boolean isLastCommand() {
+        return commandHistoryPosition + 1 >= commandHistory.size();
+    }
+
+    private void clearRedoCommands() {
+        while (!isLastCommand()) {
+            commandHistory.removeLast();
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent event) {
         try {
-            int newValue = Integer.parseInt(inputField.getText());
-            if (event.getSource() == additionButton) {
-                expression = new Addition(expression, new Value(newValue));
-                Logger.getLogger().log("+ " + newValue);
-            } else if (event.getSource() == multiplicationButton) {
-                expression = new Multiplication(expression, new Value(newValue));
-                Logger.getLogger().log("* " + newValue);
+            Object source = event.getSource();
+            if (source == additionButton || source == multiplicationButton) {
+                int newValue = Integer.parseInt(inputField.getText());
+                if (event.getSource() == additionButton) {
+                    expression = addCommand(expression, new Addition(expression, new Value(newValue)));
+                    Logger.getLogger().log("+ " + newValue);
+                } else if (event.getSource() == multiplicationButton) {
+                    expression = addCommand(expression, new Multiplication(expression, new Value(newValue)));
+                    Logger.getLogger().log("* " + newValue);
+                }
+            } else if (event.getSource() == undoButton) {
+                undo();
+                Logger.getLogger().log("UNDO");
+            } else if (event.getSource() == redoButton) {
+                redo();
+                Logger.getLogger().log("REDO");
             }
             expression = new NecessaryBrackets(expression);
             updateGUI();
@@ -56,6 +106,8 @@ public class ProfCalculator implements Runnable, ActionListener {
         inputField.setPreferredSize(new Dimension(300, 20));
         additionButton.addActionListener(this);
         multiplicationButton.addActionListener(this);
+        undoButton.addActionListener(this);
+        redoButton.addActionListener(this);
 
         frame.add(errorLabel);
         frame.add(inputField);
