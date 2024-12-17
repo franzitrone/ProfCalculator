@@ -17,6 +17,8 @@ public class ProfCalculator implements Runnable, ActionListener {
     private JTextField inputField = new JTextField();
     private JButton additionButton = guiFactory.createButton("+");
     private JButton multiplicationButton = guiFactory.createButton("*");
+    private JButton undoButton = guiFactory.createButton("UNDO");
+    private JButton redoButton = guiFactory.createButton("REDO");
     private JLabel resultLabel = guiFactory.createLabel();
 
     @Override
@@ -59,6 +61,8 @@ public class ProfCalculator implements Runnable, ActionListener {
         frame.add(inputField);
         frame.add(additionButton);
         frame.add(multiplicationButton);
+        frame.add(undoButton);
+        frame.add(redoButton);
         frame.add(resultLabel);
         updateGUI();
         frame.pack();
